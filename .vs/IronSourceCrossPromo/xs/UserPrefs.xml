@@ -1,0 +1,34 @@
+﻿<Properties StartupConfiguration="{CE24E53E-3CC1-8F62-777B-2BCF5D79B84A}|">
+  <MonoDevelop.Ide.Workbench>
+    <Files>
+      <File FileName="Assets/CrossPromo/Scripts/PromoPanelView.cs" Line="29" Column="2" />
+      <File FileName="Assets/CrossPromo/Scripts/NewClass.cs" Line="1" Column="1" />
+      <File FileName="Assets/CrossPromo/Scripts/DataTransfer/NewStruct.cs" Line="36" Column="18" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="IronSourceCrossPromo" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="CrossPromo" expanded="True">
+                <Node name="Scripts" expanded="True">
+                  <Node name="DataTransfer" expanded="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="bcb7cb79-fc02-4140-9038-7ad2a75b3017" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
