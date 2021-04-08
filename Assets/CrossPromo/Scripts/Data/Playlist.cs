@@ -9,16 +9,31 @@ using System.Text;
 //
 
 
-namespace DataTransfer
+namespace CrossPromo.Data
 {
 
     [Serializable]
-    public struct PlaylistResponse
+    public struct Playlist
     {
         [SerializeField]
-        private PlaylistEntryResponse[] results;
+        private PlaylistEntry[] results;
 
+        public int Count
+        {
+            get
+            {
+                if (results == null) return -1;
+                return results.Length;
+            }
+        }
 
+        public PlaylistEntry GetEntryAt(int index)
+        {
+            if (results == null || index < 0 || index >= results.Length) return default;
+            return results[index];
+        }
+
+        // remove
         public override string ToString()
         {
             string st = "";
@@ -30,13 +45,14 @@ namespace DataTransfer
 
             return st;
         }
+        //
 
 // remove
 #if UNITY_EDITOR
         [MenuItem("Project Tests/CreateTextJson")]
         public static void CreateTestObject()
         {
-            var myObj = JsonUtility.FromJson<PlaylistResponse>(GetTestJson());
+            var myObj = JsonUtility.FromJson<Playlist>(GetTestJson());
             Debug.Log(myObj);
 
         }

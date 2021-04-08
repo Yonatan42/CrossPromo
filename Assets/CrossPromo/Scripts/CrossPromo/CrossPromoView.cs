@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using UnityEngine.Events;
 
-namespace CrossPromo
+namespace CrossPromo.Core
 {
 
     public class CrossPromoView : MonoBehaviour
     {
-        [SerializeField]
-        private string playerId;
+        public string PlayerId;
 
         [SerializeField]
         private VideoPlayer videoPlayer;
@@ -17,45 +17,61 @@ namespace CrossPromo
         private Button button;
 
         private bool hasURL;
-
-        public string PlayerId
-        {
-            get
-            {
-                return playerId;
-            }
-        }
+        private UnityEvent videoEneded;
+        private UnityEvent promoClicked;
 
         private void Awake()
-        {
-            new CrossPromoController(this);
+        { 
+            promoClicked = new UnityEvent();
             button.onClick.AddListener(OnButtonClicked);
+            videoEneded = new UnityEvent();
+            videoPlayer.loopPointReached += OnVideoEnded;
+            new CrossPromoController(this);
         }
 
         private void OnDestroy()
         {
             button.onClick.RemoveListener(OnButtonClicked);
+            videoPlayer.loopPointReached -= OnVideoEnded;
+            promoClicked.RemoveAllListeners();
+            videoEneded.RemoveAllListeners();
         }
 
         private void OnButtonClicked()
         {
-            // remove
-            if (videoPlayer.isPlaying)
-            {
-                PauseVideo();
-            }
-            else
-            {
-                PlayVideo();
-            }
-            //
+            promoClicked.Invoke();
+        }
+
+        public void AddPromoClickedListener(UnityAction action)
+        {
+            promoClicked.AddListener(action);
+        }
+
+        public void RemovePromoClickedListener(UnityAction action)
+        {
+            promoClicked.RemoveListener(action);
+        }
+
+        private void OnVideoEnded(VideoPlayer player)
+        {
+            videoEneded.Invoke();
+        }
+
+        public void AddVideoEnededListener(UnityAction action)
+        {
+            videoEneded.AddListener(action);
+        }
+
+        public void RemoveVideoEnededListener(UnityAction action)
+        {
+            videoEneded.RemoveListener(action);
         }
 
         public void LoadVideoAtURL(string url)
         {
             videoPlayer.url = url;
             hasURL = true;
-            videoPlayer.Prepare();            
+            videoPlayer.Prepare(); // todo - check if there is a prepate error?           
         }
 
         public void PlayVideo()
