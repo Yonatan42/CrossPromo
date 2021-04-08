@@ -23,6 +23,11 @@ namespace CrossPromo
             //
         }
 
+        public void OnInitialize()
+        {
+
+        }
+
         public void Next()
         {
 

@@ -13,10 +13,10 @@ namespace DataTransfer
 {
 
     [Serializable]
-    public struct DataTransferObject // change name later
+    public struct PlaylistResponse
     {
         [SerializeField]
-        private Result[] results;
+        private PlaylistEntryResponse[] results;
 
 
         public override string ToString()
@@ -36,7 +36,7 @@ namespace DataTransfer
         [MenuItem("Project Tests/CreateTextJson")]
         public static void CreateTestObject()
         {
-            var myObj = JsonUtility.FromJson<DataTransferObject>(GetTestJson());
+            var myObj = JsonUtility.FromJson<PlaylistResponse>(GetTestJson());
             Debug.Log(myObj);
 
         }
@@ -75,57 +75,6 @@ namespace DataTransfer
 
         }
 
-
-        [Serializable]
-        public struct Result
-        {
-            [SerializeField]
-            private string id;
-            [SerializeField]
-            private string video_url;
-            [SerializeField]
-            private string click_url;
-            [SerializeField]
-            private string tracking_url;
-
-
-            public string Id
-            {
-                get
-                {
-                    return id;
-                }
-            }
-
-            public string VideoURL
-            {
-                get
-                {
-                    return video_url;
-                }
-            }
-
-            public string ClickURL
-            {
-                get
-                {
-                    return click_url;
-                }
-            }
-
-            public string TrackingURL
-            {
-                get
-                {
-                    return tracking_url;
-                }
-            }
-
-            public override string ToString()
-            {
-                return string.Format("id: {0}, vid url: {1}, click url: {2}, track url: {3}", id, video_url, click_url, tracking_url);
-            }
-        }
     }
 }
 
