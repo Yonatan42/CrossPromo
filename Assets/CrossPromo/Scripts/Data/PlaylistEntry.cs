@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace CrossPromo.Data
 {
+    /// <summary>
+    /// Playlist Entry Data Object
+    /// </summary>
     [Serializable]
     public class PlaylistEntry
     {

@@ -3,7 +3,9 @@ using UnityEngine;
 
 namespace CrossPromo.Data
 {
-
+    /// <summary>
+    /// Playlist Data Object
+    /// </summary>
     [Serializable]
     public struct Playlist
     {

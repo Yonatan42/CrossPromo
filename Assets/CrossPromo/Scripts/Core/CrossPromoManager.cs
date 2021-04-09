@@ -12,6 +12,9 @@ namespace CrossPromo.Core
     public class CrossPromoManager : MonoBehaviour
     {
 #pragma warning disable 0649
+        /// <summary>
+        /// The Player Id of the CrossPromo instance. This may be set a a SerializeField in the prefab or via script. 
+        /// </summary>
         public string PlayerId;
 
         [SerializeField]
@@ -68,6 +71,7 @@ namespace CrossPromo.Core
 
         private void OnButtonClicked()
         {
+            // we make sure not to track if it is already tracked OR if its tracking in pending
             if (!currentEntry.IsTracked && !currentEntry.TrackPending)
             {
                 SendTrackRequest();
