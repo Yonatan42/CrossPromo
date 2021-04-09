@@ -86,7 +86,6 @@ namespace CrossPromo.Core
 
         private void OnVideoEnded(VideoPlayer player)
         {
-            pausedTime = 0;
             Next();
         }
 
@@ -125,9 +124,8 @@ namespace CrossPromo.Core
                 return;
             }
             currentEntryIndex = (currentEntryIndex + 1) % playlist.Count;
-            currentEntry = playlist.GetEntryAt(currentEntryIndex);
-            LoadAndPlay(currentEntry.VideoURL);
-
+            PrepareForNewEntry();
+            pausedTime = 0;
         }
 
         public void Pevious()
@@ -137,9 +135,8 @@ namespace CrossPromo.Core
                 Logger.LogWarning("Attempted to invoke the Pervious method without a loaded playlist");
                 return;
             }
-            currentEntryIndex = (currentEntryIndex - 1) % playlist.Count;
-            currentEntry = playlist.GetEntryAt(currentEntryIndex);
-            LoadAndPlay(currentEntry.VideoURL);
+            currentEntryIndex = (playlist.Count + currentEntryIndex - 1) % playlist.Count;
+            PrepareForNewEntry();
         }
 
         public void Pause()
@@ -170,7 +167,7 @@ namespace CrossPromo.Core
 
         #region Auxillary Video Methods
 
-        private void LoadVideoAtURL(string url)
+        private void LoadVideo(string url)
         {
             videoPlayer.url = url;
             Logger.Log("Video URL set to: " + url);
@@ -178,10 +175,24 @@ namespace CrossPromo.Core
             videoPlayer.Prepare();
         }
 
-        private void LoadAndPlay(string url)
+        private void LoadAndPlayVideo(string url)
         {
-            LoadVideoAtURL(url);
+            LoadVideo(url);
             Resume();
+        }
+
+        private void PrepareForNewEntry()
+        {
+            currentEntry = playlist.GetEntryAt(currentEntryIndex);
+            string videoURL = currentEntry.VideoURL;
+            if (videoPlayer.isPaused)
+            {
+                LoadVideo(videoURL);
+            }
+            else
+            {
+                LoadAndPlayVideo(videoURL);
+            }
         }
 
         #endregion
