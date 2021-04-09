@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2515143249222930784}
-  - component: {fileID: 8623326719698703535}
+  - component: {fileID: 1726198904}
   - component: {fileID: 7465173425209194752}
   - component: {fileID: 1726198902}
   - component: {fileID: 1726198901}
@@ -40,7 +40,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8623326719698703535
+--- !u!114 &1726198904
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,10 +49,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 9122453719222449972}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be48df867c423434eaf1084ae9f44338, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a0d9abfd9a3942918b25abc6bd52ee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerId: TestID
+  PlayerId: '[PLAYER_ID]'
   videoPlayer: {fileID: 7465173425209194752}
   button: {fileID: 1726198905}
 --- !u!328 &7465173425209194752
