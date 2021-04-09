@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿// todo - delete this class
+
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using UnityEngine.Events;

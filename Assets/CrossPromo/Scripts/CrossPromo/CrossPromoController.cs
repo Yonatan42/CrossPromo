@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿// todo - delete this class
+
+using UnityEngine;
 using CrossPromo.Data;
 using System.Collections;
 
