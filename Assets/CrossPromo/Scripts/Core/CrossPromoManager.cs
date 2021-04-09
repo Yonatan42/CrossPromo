@@ -29,7 +29,6 @@ namespace CrossPromo.Core
         PlaylistEntry currentEntry;
         private bool hasPlaylist;
         private bool hasURL;
-        private double pausedTime;
 
         #region Unity Lifecycle Event Methods
 
@@ -40,22 +39,6 @@ namespace CrossPromo.Core
             videoPlayer.errorReceived += OnVideoError;
 
             StartCoroutine(Interactor.ReceivePlaylistRoutine(OnPlaylistLoaded, OnPlaylistLoadFailed));
-        }
-
-        private void OnEnable()
-        {
-            if(hasPlaylist)
-            {
-                Resume();
-            }
-        }
-
-        private void OnDisable()
-        {
-            if (hasPlaylist)
-            {
-                Pause();
-            }
         }
 
         private void OnDestroy()
@@ -125,7 +108,6 @@ namespace CrossPromo.Core
             }
             currentEntryIndex = (currentEntryIndex + 1) % playlist.Count;
             PrepareForNewEntry();
-            pausedTime = 0;
         }
 
         public void Pevious()
@@ -148,7 +130,6 @@ namespace CrossPromo.Core
             if (videoPlayer.isPaused) return;
 
             videoPlayer.Pause();
-            pausedTime = videoPlayer.time;
         }
 
         public void Resume()
@@ -160,7 +141,6 @@ namespace CrossPromo.Core
             }
             if (videoPlayer.isPlaying) return;
             videoPlayer.Play();
-            videoPlayer.time = pausedTime;
         }
 
         #endregion
