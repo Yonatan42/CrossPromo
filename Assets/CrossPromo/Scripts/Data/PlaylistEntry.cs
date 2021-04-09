@@ -52,12 +52,5 @@ namespace CrossPromo.Data
         public bool IsTracked { get; set; }
 
         public bool TrackPending { get; set; }
-
-        // remove
-        public override string ToString()
-        {
-            return string.Format("id: {0}, vid url: {1}, click url: {2}, track url: {3}", id, video_url, click_url, tracking_url);
-        }
-        //
     }
 }

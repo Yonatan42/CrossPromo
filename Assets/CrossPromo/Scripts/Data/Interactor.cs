@@ -3,12 +3,6 @@ using System.Collections;
 using UnityEngine.Events;
 using UnityEngine;
 
-// remove
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-//
-
 namespace CrossPromo.Data
 {
     public static class Interactor
@@ -49,24 +43,5 @@ namespace CrossPromo.Data
                 }
             }
         }
-
-
-        // remove
-#if UNITY_EDITOR
-        [MenuItem("Project Tests/Load From Server")]
-        public static void LoadFromServer()
-        {
-            CrossPromo.Core.CrossPromoView mono = GameObject.FindObjectOfType<CrossPromo.Core.CrossPromoView>();
-            mono.StartCoroutine(ReceivePlaylistRoutine(playlist =>
-            {
-                Debug.Log(playlist);
-            }, err =>
-            {
-                Debug.Log(err);
-            }));
-            
-        }
-#endif
-//
     }
 }

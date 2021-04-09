@@ -8,7 +8,7 @@ namespace CrossPromo.Logging
     {
         private enum LogType { Message, Warning, Error }
 
-        private const string Prefix = "CrossPromo: ";
+        private const string Prefix = "[CrossPromo] ";
 
         [Conditional("CROSSPROMO_LOG_ENABLED")]
         public static void Log(string msg)

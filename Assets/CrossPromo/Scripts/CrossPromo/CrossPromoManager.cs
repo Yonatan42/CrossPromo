@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.Video;
 using CrossPromo.Data;
-
+using Logger = CrossPromo.Logging.Logger;
 
 namespace CrossPromo.Core
 {
@@ -37,7 +37,7 @@ namespace CrossPromo.Core
         {
             if(hasPlaylist)
             {
-                Play();
+                Resume();
             }
         }
 
@@ -72,8 +72,8 @@ namespace CrossPromo.Core
 
         private void OnVideoError(VideoPlayer player, string err)
         {
-            // todo - report error
-            Debug.LogError($"error on id {currentEntry.Id}: {err}");
+            Debug.LogError($"Video error occurred for playlist entry with id {currentEntry.Id}: {err}");
+            Debug.LogWarning("Skipping current playlist entry");
             Next();
         }
 
@@ -81,20 +81,9 @@ namespace CrossPromo.Core
         private void LoadVideoAtURL(string url)
         {
             videoPlayer.url = url;
+            Logger.Log("Video URL set to: " + url);
             hasURL = true;
-            videoPlayer.Prepare(); // todo - check if there is a prepate error?           
-        }
-
-        private void Play()
-        {
-            if (!hasURL) return; // todo - show error?
-            videoPlayer.Play();
-        }
-
-        private void PauseVideo()
-        {
-            if (!hasURL) return; // todo - show error?
-            videoPlayer.Pause();
+            videoPlayer.Prepare();
         }
 
         private void OnPlaylistLoaded(Playlist playlist)
@@ -106,42 +95,60 @@ namespace CrossPromo.Core
 
         private void OnPlaylistLoadFailed(string err)
         {
-            // todo - handle error
+            Logger.LogError("Error occurred while downloading playlist: " + err);
         }
 
         public void Next()
         {
-            if (!hasPlaylist) return; // todo - handle error?
+            if (!hasPlaylist)
+            {
+                Logger.LogWarning("Attempted to invoke Next method without a loaded playlist");
+                return;
+            }
             currentEntryIndex = (currentEntryIndex + 1) % playlist.Count;
             currentEntry = playlist.GetEntryAt(currentEntryIndex);
-            LoadAndPlay(currentEntry.VideoURL); // todo - make sure that video url isn't null
+            LoadAndPlay(currentEntry.VideoURL);
 
         }
 
         public void Pevious()
         {
-            if (!hasPlaylist) return; // todo - handle error?
+            if (!hasPlaylist)
+            {
+                Logger.LogWarning("Attempted to invoke the Pervious method without a loaded playlist");
+                return;
+            }
             currentEntryIndex = (currentEntryIndex - 1) % playlist.Count;
             currentEntry = playlist.GetEntryAt(currentEntryIndex);
-            LoadAndPlay(currentEntry.VideoURL); // todo - make sure that video url isn't null
+            LoadAndPlay(currentEntry.VideoURL);
         }
 
         public void Pause()
         {
-            if (!hasURL || videoPlayer.isPaused) return; // todo - handle error?
-            PauseVideo();
+            if (!hasURL)
+            {   Logger.LogWarning("Attempted to invoke the Pause method without a loaded video url");
+                return;
+            }
+            if (videoPlayer.isPaused) return;
+
+            videoPlayer.Pause();
         }
 
         public void Resume()
         {
-            if (!hasURL || videoPlayer.isPlaying) return; // todo - handle error?
-            Play();
+            if (!hasURL)
+            {
+                Logger.LogWarning("Attempted to invoke the Resume method without a loaded video url");
+                return;
+            }
+            if (videoPlayer.isPlaying) return;
+            videoPlayer.Play();
         }
 
         private void LoadAndPlay(string url)
         {
             LoadVideoAtURL(url);
-            Play();
+            Resume();
         }
 
         private void SendTrackRequest()
@@ -153,18 +160,21 @@ namespace CrossPromo.Core
                 {
                     entry.IsTracked = true;
                     entry.TrackPending = false;
+                    Logger.Log($"Playlist entry with id {entry.Id} marked as tracked");
                 },
                 err =>
                 {
-                    // todo - handle error
                     entry.TrackPending = false;
+                    Logger.LogError($"Error occurred while tracking entry with id {entry.Id}: {err}");
                 }));
 
         }
 
         private void OpenClickURL()
         {
-            Application.OpenURL(currentEntry.ClickURL);
+            string url = currentEntry.ClickURL;
+            Logger.Log($"Openeing URL {url} in browser");
+            Application.OpenURL(url);
         }
     }
 }
