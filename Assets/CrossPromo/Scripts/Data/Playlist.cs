@@ -7,8 +7,10 @@ namespace CrossPromo.Data
     [Serializable]
     public struct Playlist
     {
+#pragma warning disable 0649
         [SerializeField]
         private PlaylistEntry[] results;
+#pragma warning restore 0649
 
         public int Count
         {

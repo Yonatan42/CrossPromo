@@ -6,10 +6,9 @@ using Logger = CrossPromo.Logging.Logger;
 
 namespace CrossPromo.Core
 {
-
     public class CrossPromoManager : MonoBehaviour
     {
-
+#pragma warning disable 0649
         public string PlayerId;
 
         [SerializeField]
@@ -17,12 +16,14 @@ namespace CrossPromo.Core
 
         [SerializeField]
         private Button button;
+#pragma warning disable 0649
 
         private Playlist playlist;
         private int currentEntryIndex = -1;
         PlaylistEntry currentEntry;
         private bool hasPlaylist;
         private bool hasURL;
+        private double pausedTime;
 
         private void Awake()
         {
@@ -43,7 +44,7 @@ namespace CrossPromo.Core
 
         private void OnDisable()
         {
-            if(hasPlaylist)
+            if (hasPlaylist)
             {
                 Pause();
             }
@@ -67,6 +68,7 @@ namespace CrossPromo.Core
 
         private void OnVideoEnded(VideoPlayer player)
         {
+            pausedTime = 0;
             Next();
         }
 
@@ -132,6 +134,7 @@ namespace CrossPromo.Core
             if (videoPlayer.isPaused) return;
 
             videoPlayer.Pause();
+            pausedTime = videoPlayer.time;
         }
 
         public void Resume()
@@ -143,6 +146,7 @@ namespace CrossPromo.Core
             }
             if (videoPlayer.isPlaying) return;
             videoPlayer.Play();
+            videoPlayer.time = pausedTime;
         }
 
         private void LoadAndPlay(string url)

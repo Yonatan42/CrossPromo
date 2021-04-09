@@ -7,6 +7,7 @@ namespace CrossPromo.Data
     [Serializable]
     public class PlaylistEntry
     {
+#pragma warning disable 0649
         [SerializeField]
         private string id;
         [SerializeField]
@@ -15,7 +16,7 @@ namespace CrossPromo.Data
         private string click_url;
         [SerializeField]
         private string tracking_url;
-
+#pragma warning restore 0649
 
         public string Id
         {
