@@ -184,15 +184,7 @@ namespace CrossPromo.Core
         private void PrepareForNewEntry()
         {
             currentEntry = playlist.GetEntryAt(currentEntryIndex);
-            string videoURL = currentEntry.VideoURL;
-            if (videoPlayer.isPaused)
-            {
-                LoadVideo(videoURL);
-            }
-            else
-            {
-                LoadAndPlayVideo(videoURL);
-            }
+            LoadAndPlayVideo(currentEntry.VideoURL);
         }
 
         #endregion
