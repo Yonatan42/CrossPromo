@@ -6,6 +6,9 @@ using Logger = CrossPromo.Logging.Logger;
 
 namespace CrossPromo.Core
 {
+    /// <summary>
+    /// Main class and MonoBehaviour responsible for the CrossPromo prefabs
+    /// </summary>
     public class CrossPromoManager : MonoBehaviour
     {
 #pragma warning disable 0649
@@ -24,6 +27,8 @@ namespace CrossPromo.Core
         private bool hasPlaylist;
         private bool hasURL;
         private double pausedTime;
+
+        #region Unity Lifecycle Event Methods
 
         private void Awake()
         {
@@ -57,6 +62,10 @@ namespace CrossPromo.Core
             videoPlayer.errorReceived -= OnVideoError;
         }
 
+        #endregion
+
+        #region UI Event Methods
+
         private void OnButtonClicked()
         {
             if (!currentEntry.IsTracked && !currentEntry.TrackPending)
@@ -65,6 +74,11 @@ namespace CrossPromo.Core
             }
             OpenClickURL();
         }
+
+        #endregion
+
+
+        #region Video Event Methods
 
         private void OnVideoEnded(VideoPlayer player)
         {
@@ -79,14 +93,9 @@ namespace CrossPromo.Core
             Next();
         }
 
+        #endregion
 
-        private void LoadVideoAtURL(string url)
-        {
-            videoPlayer.url = url;
-            Logger.Log("Video URL set to: " + url);
-            hasURL = true;
-            videoPlayer.Prepare();
-        }
+        #region Playlist Loading Callback Methods
 
         private void OnPlaylistLoaded(Playlist playlist)
         {
@@ -99,6 +108,10 @@ namespace CrossPromo.Core
         {
             Logger.LogError("Error occurred while downloading playlist: " + err);
         }
+
+        #endregion
+
+        #region Public API Methods
 
         public void Next()
         {
@@ -149,11 +162,27 @@ namespace CrossPromo.Core
             videoPlayer.time = pausedTime;
         }
 
+        #endregion
+
+        #region Auxillary Video Methods
+
+        private void LoadVideoAtURL(string url)
+        {
+            videoPlayer.url = url;
+            Logger.Log("Video URL set to: " + url);
+            hasURL = true;
+            videoPlayer.Prepare();
+        }
+
         private void LoadAndPlay(string url)
         {
             LoadVideoAtURL(url);
             Resume();
         }
+
+        #endregion
+
+        #region Misc Methods
 
         private void SendTrackRequest()
         {
@@ -180,5 +209,7 @@ namespace CrossPromo.Core
             Logger.Log($"Openeing URL {url} in browser");
             Application.OpenURL(url);
         }
+
+        #endregion
     }
 }

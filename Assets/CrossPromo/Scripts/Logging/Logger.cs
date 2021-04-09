@@ -3,7 +3,9 @@ using Debug = UnityEngine.Debug;
 
 namespace CrossPromo.Logging
 {
-
+    /// <summary>
+    /// Logging class for CrossPromo 
+    /// </summary>
     public static class Logger
     {
         private enum LogType { Message, Warning, Error }

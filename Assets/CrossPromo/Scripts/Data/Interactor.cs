@@ -5,8 +5,17 @@ using UnityEngine;
 
 namespace CrossPromo.Data
 {
+    /// <summary>
+    /// Responsible for creating server requests and firing their callbacks
+    /// </summary>
     public static class Interactor
-    { 
+    {
+        /// <summary>
+        /// Method
+        /// </summary>
+        /// <param name="onComplete"></param>
+        /// <param name="onError"></param>
+        /// <returns></returns>
         public static IEnumerator ReceivePlaylistRoutine(UnityAction<Playlist> onComplete, UnityAction<string> onError)
         {
             const string ServerURL = "https://run.mocky.io/v3/81fab340-9550-4ab4-8859-836b01ee48ff";
